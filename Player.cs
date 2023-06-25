@@ -7,22 +7,13 @@ using System.Threading.Tasks;
 
 namespace OOPreb
 {
-    class Player : Field
+    public class Player : Field
     {
-        //метод, рисующий игрока
+        public static char PlayerSymbol = 'Q';
         public static void DrawPlayer()
         {
             Console.SetCursorPosition(playerX, playerY);
-            Console.Write("Ь");
+            Console.Write(PlayerSymbol);
         }
-
-        /*static void Arrow()
-        {
-            int arrowX = playerX;
-            int arrowY = playerY - 2;
-            Console.SetCursorPosition(arrowX, arrowY);
-            Console.Write("@");
-        }*/
-
     }
 }

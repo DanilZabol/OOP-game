@@ -1,57 +1,123 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OOPreb
 {
-    class Arrow : Player
+    public class Arrow : Player
     {
+
         
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
             ConsoleKeyInfo keyInfo;
 
+            if (Exit.BoolExit == true)
+            {
+                return;
+            }
+
+
             DrawField();
             DrawArrow();
             DrawPlayer();
+            Prize.DrawPrize();
+            Exit.DrawExit();
 
-            if (BoolArrow == true)
-            {
-                do
+            do
                 {
                     keyInfo = Console.ReadKey(true);
-                    Console.Clear();
+                    int[] arrowPath = AutomaticArrow.MoveElement(Arrow.playerX, Arrow.playerY, arrowX, arrowY);
+                    
+                    
 
-                    //int CheckfieldWidth = fieldWidth - 2;
-                    //int CheckfieldHeight = fieldHeight - 2;
-                    //test
                     switch (keyInfo.Key)
                     {
                         case ConsoleKey.W:
-                            if (arrowY != (playerY - arrowDistance) && (arrowX == (playerX - arrowDistance) || arrowX == (playerX + arrowDistance))) arrowY--;
+                        if (BoolArrow == true)
+                        {
+                            PlayerMovement.DrawPlayerMovement();
+                            Prize.DrawPrize();
+                            Exit.DrawExit();
                             break;
+                        }
+                        if (arrowY != (playerY - arrowDistance) && (arrowX == (playerX - arrowDistance) || arrowX == (playerX + arrowDistance))) arrowY--;
+                            Console.Clear();
+                            DrawField();
+                            DrawArrow();
+                            DrawPlayer();
+                            Prize.DrawPrize();
+                            Exit.DrawExit();
+                        break;
                         case ConsoleKey.A:
-                            if (arrowX != (playerX - arrowDistance) && (arrowY == (playerY - arrowDistance) || arrowY == (playerY + arrowDistance))) arrowX--;
+                        if (BoolArrow == true)
+                        {
                             break;
+                        }
+                        if (arrowX != (playerX - arrowDistance) && (arrowY == (playerY - arrowDistance) || arrowY == (playerY + arrowDistance))) arrowX--;
+                            Console.Clear();
+                            DrawField();
+                            DrawArrow();
+                            DrawPlayer();
+                            Prize.DrawPrize();
+                            Exit.DrawExit();
+                        break;
                         case ConsoleKey.S:
-                            if (arrowY != (playerY + arrowDistance) && (arrowX == (playerX - arrowDistance) || arrowX == (playerX + arrowDistance))) arrowY++;
+                        if (BoolArrow == true)
+                        {
                             break;
+                        }
+                        if (arrowY != (playerY + arrowDistance) && (arrowX == (playerX - arrowDistance) || arrowX == (playerX + arrowDistance))) arrowY++;
+                            Console.Clear();
+                            DrawField();
+                            DrawArrow();
+                            DrawPlayer();
+                            Prize.DrawPrize();
+                            Exit.DrawExit();
+                        break;
                         case ConsoleKey.D:
-                            if (arrowX != (playerX + arrowDistance) && (arrowY == (playerY - arrowDistance) || arrowY == (playerY + arrowDistance))) arrowX++;
+                        if (BoolArrow == true)
+                        {
                             break;
+                        }
+                        if (arrowX != (playerX + arrowDistance) && (arrowY == (playerY - arrowDistance) || arrowY == (playerY + arrowDistance))) arrowX++;
+                            Console.Clear();
+                            DrawField();
+                            DrawArrow();
+                            DrawPlayer();
+                            Prize.DrawPrize();
+                            Exit.DrawExit();
+                        break;
                         case ConsoleKey.Spacebar:
-                            MovementArrow();
+                        if (BoolArrow == false)
+                        {
+                            BoolArrow = true;
+                            Console.Clear();
+                            DrawField();
+                            DrawPlayer();
+                            AutomaticArrow.DrawArrowPath(arrowPath, AutomaticArrow.automaticArrowX, AutomaticArrow.automaticArrowY);
+                            Prize.DrawPrize();
+                            Exit.DrawExit();
                             break;
-                    }
-
-                    DrawField();
-                    DrawArrow();
-                    DrawPlayer();
+                        } else break;
+                        case ConsoleKey.F:
+                            arrowX = playerX;
+                            arrowY = playerY - arrowDistance;
+                            BoolArrow = false;
+                            Console.Clear();
+                            DrawField();
+                            DrawArrow();
+                            DrawPlayer();
+                            Prize.DrawPrize();
+                            Exit.DrawExit();
+                        break;
+                    } 
                 } while (keyInfo.Key != ConsoleKey.Escape);
-            }
         }
 
         static void DrawArrow()
@@ -99,74 +165,5 @@ namespace OOPreb
                 Console.Write("/");
             }
         }
-
-
-
-        static void MovementArrow()
-        {
-            // новая система координат с центром в игроке
-            playerX = 0;
-            playerY = 0;
-            //arrowX = 
-
-
-            // условие количества стрелок
-            int ArrowCounter = 0;
-            if (ArrowCounter > 2)
-            {
-                BoolArrow = false;
-            }
-
-
-            int nextX = arrowX + 1;
-            int nextY = arrowY + 1;
-
-
-            char[,] field = Field.FieldArray;
-
-            while (true)
-            {
-                if (field[nextY, nextX] != Wall.WallSymbol)
-                {
-                    arrowX = nextX;
-                    arrowY = nextY;
-                }
-                else
-                {
-                    ArrowCounter++;
-                    break;
-                }
-                // Обновление координат элемента
-                // ...
-
-                // Отрисовка элемента
-                // ...
-
-                // Задержка перед следующим обновлением
-                // ...
-            }
-        }
-
-        /*static bool shoot = false;
-        static int arrowX;
-        static int arrowY;
-        static void ShootArrow()
-        {
-            arrowX = Program.arrowX;
-            arrowY = Program.arrowY - 2;
-            shoot = false;
-        }
-
-        static void DrawArrow()
-        {
-            Console.SetCursorPosition(arrowX, arrowY);
-            Console.Write("@");
-        }
-
-        static void MoveArrow()
-        {
-            if (arrowY > 1)
-                arrowY--;
-        }*/
     }
 }

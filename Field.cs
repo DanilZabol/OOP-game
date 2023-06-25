@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace OOPreb
 {
-    internal class Field : Element
+    public class Field : Element
     {
-
-        //static int WindowSizeWidth = Math.Floor(fieldWidth + 0.2 * fieldWidth);
         static double doubleValueWidth = fieldWidth + 0.2 * fieldWidth;
         static int WindowSizeWidth = Convert.ToInt32(doubleValueWidth);
         static double doubleValueHeight = fieldHeight + 0.2 * fieldHeight;
@@ -18,13 +16,15 @@ namespace OOPreb
 
         //вывод поля
         public static char[,] FieldArray { get; private set; }
+
+
         public static void DrawField()
         {
             Console.SetWindowSize(WindowSizeWidth, WindowSizeHeight);
 
             FieldArray = new char[fieldHeight, fieldWidth];
 
-            // Заполнение карты пробелами
+            // Заполнение поля
 
             for (int y = 0; y < fieldHeight; y++)
             {
@@ -41,6 +41,9 @@ namespace OOPreb
                 }
             }
 
+
+            // вывод поля
+
             for (int y = 0; y < fieldHeight; y++)
             {
                 for (int x = 0; x < fieldWidth; x++)
@@ -50,23 +53,9 @@ namespace OOPreb
                 Console.WriteLine();
             }
 
-            /*for (int y = 0; y < fieldHeight; y++)
-            {
-                for (int x = 0; x < fieldWidth; x++)
-                {
-                    if (x == 0 || x == fieldWidth - 1 || y == 0 || y == fieldHeight - 1)
-                    {
-                        // Отрисовка границы
-                        DrawWall();
-                    }
-                    else
-                    {
-                        // Заполнение поля пробелами
-                        Console.Write(" ");
-                    }
-                }
-                Console.WriteLine();
-            }*/
+            FieldArray[10, 10] = Wall.WallSymbol;
+            Console.SetCursorPosition(10, 10);
+            Console.Write(Wall.WallSymbol);
         }
     }
 }
